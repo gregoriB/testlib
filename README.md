@@ -103,6 +103,22 @@ assert = {
  * 
  */
 createSpy(Object);
+
+/*
+ * Just a promise wrapper, equivalent to `new Promise(resove => { fn(); resolve(); });
+ * Accepts a callback, passes in the `resolve/reject` promise methods.
+ * A common practice in testing is to name "resolve" as "done".
+ * eg: 
+ *   let result = 'FAIL';
+ *   await waitFor(done => {
+ *       setTimeout(() => {
+ *           result = 'PASS';
+ *           done();
+ *       }, 2000);
+ *   });
+ *   assert.equal(result, 'PASS');
+ */
+waitFor(Function);
 ```
 <br>
 

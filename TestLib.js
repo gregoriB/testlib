@@ -37,6 +37,7 @@ class TestLib {
             createSpy: context => new Spy(context),
             beforeEach: this.beforeEach.bind(this),
             test: this.test.bind(this),
+            waitFor: this.waitFor,
             fixtureProvider: this.fixtureProvider
         }
     }
@@ -96,6 +97,10 @@ class TestLib {
             args.push(fixtures);
             fn(...args);
         }
+    }
+
+    waitFor(fn) {
+        return new Promise(fn);
     }
 
     incrementTally(tally, verdict) {

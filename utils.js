@@ -42,7 +42,7 @@ function setCustomLogs() {
  * Recursively walk from the root directly and build a list of files
  * that match a regular expression.
  */
-function findMatchingFiles(regex, dir = path.resolve('../../')) {
+function findMatchingFiles(regex, dir = path.resolve('')) {
     const skips = ['node_modules', '.git', 'testlib'];
     const files = [];
     fs.readdirSync(dir).forEach(file => {
