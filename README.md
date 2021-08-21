@@ -105,18 +105,8 @@ assert = {
 createSpy(Object);
 
 /*
- * Just a promise wrapper, equivalent to `new Promise(resove => { fn(); resolve(); });
- * Accepts a callback, passes in the `resolve/reject` promise methods.
- * A common practice in testing is to name "resolve" as "done".
- * eg: 
- *   let result = 'FAIL';
- *   await waitFor(done => {
- *       setTimeout(() => {
- *           result = 'PASS';
- *           done();
- *       }, 2000);
- *   });
- *   assert.equal(result, 'PASS');
+ * Just a promise wrapper, equivalent to `new Promise(fn)`. See the example code in the asynchronous
+ * testing section.
  */
 waitFor(Function);
 ```
@@ -147,16 +137,12 @@ const TestLib = require("testlib");
 const testlib = new TestLib();
 
 testlib.run("Async testing", async (tools) => {
-    const { test, assert } = tools;
+    const { test, assert, waitFor } = tools;
 
     await test("Waits for the promise to resolve", async () => {
+        const timeout = done => setTimeout(() => done('PASS'), 500);
         let result = 'FAIL';
-        await new Promise(resolve => {
-            setTimeout(() => {
-                result = 'PASS';
-                resolve();
-           }, 1000);
-        });
+        result = await waitFor(timeout);
         assert.equal(result, 'PASS');
     });
 });

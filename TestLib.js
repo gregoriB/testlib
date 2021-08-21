@@ -18,16 +18,15 @@ class TestLib {
     }
 
     async getResults() {
-        await new Promise(resolve => {
-            const testlib = this;
-            function resultsPolling() {
-                if (testlib.complete === true) {
+        const testlib = this;
+        await testlib.waitFor(resolve => {
+            setInterval(function() {
+                if (testlib.complete) {
                     clearInterval(this);
                     resolve();
                 }
-            }
-            setInterval(resultsPolling);
-        });
+            });
+        })
         return { description: this.description, tallies: this.tallies };
     }
 

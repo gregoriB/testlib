@@ -4,14 +4,10 @@ const testlib =  new TestLib();
 testlib.run('Async', async (tools) => {
     const { assert, test, waitFor }  = tools;
 
-    await test('waitFor function works', async () => {
+    await test('Wait for promise to resolve', async () => {
+        let timeout = done => setTimeout(() => done('PASS'), 500);
         let result = 'FAIL';
-        await waitFor(done => {
-            setTimeout(() => {
-                result = 'PASS';
-                done();
-            }, 500);
-        });
+        result = await waitFor(timeout);
         assert.equal(result, 'PASS');
     });
 });
